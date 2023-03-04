@@ -57,7 +57,20 @@ git clone https://github.com/DerekSHAOZH/Global_Phylogeny_by_Local_Inferences/
 ```
 
 ## Execution
-Your should run the python script within this working directory.
-```sh
-python3 main.py
-```
+* Change dataset path in config.py
+  ```python
+  #II. Loading the sequence dataset
+  fasta_file_path = os.getcwd() + "/Dataset/influenza_98.fasta"  #TODO if change to another dataset
+  num_seq = 98    #TODO if change to another dataset
+  ```
+* Change threshold in config.py
+  ```python
+  #IV. Setting the threshold for inferring local tree
+  threshold = 10  #TODO
+  ```  
+
+* Run scripts
+  Your should run the Python script within this working directory.
+  ```sh
+  python3 main.py
+  ```
