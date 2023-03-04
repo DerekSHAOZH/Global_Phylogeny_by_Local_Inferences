@@ -10,6 +10,15 @@ Final Project for FUB 22Win Phylogeny Inference and Application
   ```sh
   python3 --version
   ```
+* Pandas
+  ```sh
+  pip install pandas
+  ```
+  if you are a Conda user,
+  ```sh
+  conda install -c anaconda pandas
+  ```
+  
 * Matplotlib
   ```sh
   pip install matplotlib
