@@ -44,13 +44,9 @@ Final Project for FUB 22Win Phylogeny Inference and Application
   ```sh
   conda install -c conda-forge biopython
   ```
-* Networkx
+* Networkx v=3.0.0
   ```sh
-  pip install networkx[default]
-  ```
-  if you are a Conda user,
-  ```sh
-  conda install -c anaconda networkx
+  pip install networkx
   ```
   
 ## Installation
