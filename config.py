@@ -20,8 +20,8 @@ from Bio.Phylo.TreeConstruction import *
 from io import StringIO
 
 #only in google colab
-from google.colab import drive
-drive.mount('/content/drive')
+# from google.colab import drive
+# drive.mount('/content/drive')
 
 #II. Loading the sequence dataset
 fasta_file_path = "/Dataset/influenza_98.fasta"  #TODO if change to another dataset
