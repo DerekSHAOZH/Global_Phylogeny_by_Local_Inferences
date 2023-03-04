@@ -1,3 +1,5 @@
+# import config
+from config import *
 #I. Importing the Tree Class for phylogeny inference
 class Vertex:
   def __init__(self,name): 
@@ -50,7 +52,9 @@ class Tree:
     if end2_name not in self.vertex_map.keys():
       self.Add_vertex(end2_name)
     node1 = self.Get_vertex(end1_name)
-    node2 = self.Get_vertex(end2_name)   
+    node2 = self.Get_vertex(end2_name) 
+    node1.in_degree += 1
+    node2.in_degree += 1  
     node1.neighbors.append(node2)
     node2.neighbors.append(node1)
     self.edge_list_map[(node1,node2)] = distance
@@ -68,7 +72,10 @@ class Tree:
     p.children.append(c)
     self.edge_list_map[(p,c)] = distance
   def Get_edge_length(self, parent, child):
-    return (self.edge_list_map[(parent, child)])
+    if (parent, child) in self.edge_list_map.keys():
+      return (self.edge_list_map[(parent, child)])
+    else:
+      return (self.edge_list_map[(parent, child)])
   def Set_root(self):
     for vertex in self.vertex_map.values():
       if vertex.in_degree == 0:
@@ -120,9 +127,10 @@ class Tree:
       else:        
         c_l = v.children[0]
         c_r = v.children[1]        
-        len_l = self.Get_edge_length(v,c_l)
-        len_r = self.Get_edge_length(v,c_r)
-        v.newick_label = f'({c_l.newick_label}:{len_l},{c_r.newick_label}:{len_r})'
+        # len_l = self.Get_edge_length(v,c_l)
+        # len_r = self.Get_edge_length(v,c_r)
+        # v.newick_label = f'({c_l.newick_label}:{len_l},{c_r.newick_label}:{len_r})'
+        v.newick_label = f'({c_l.newick_label},{c_r.newick_label})'
     self.root.newick_label += ";"
     return(self.root.newick_label)   
 
