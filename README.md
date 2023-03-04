@@ -1,7 +1,7 @@
 # Global_Phylogeny_by_Local_Inferences
 Final Project for FUB 22Win Phylogeny Inference and Application
 
-## .ipynb
+## Notebook
 *GPLI.ipynb* is the interactive jupyter notebook (supported by Google Colab) which has the same function as the python scripts.
 
 ## Prerequisites
