@@ -75,3 +75,19 @@ git clone https://github.com/DerekSHAOZH/Global_Phylogeny_by_Local_Inferences/
   ```sh
   python3 main.py
   ```
+## Result
+All output files will be directed to the *Result* folder.
+
+For example,
+
+    .
+    ├── ...
+    ├── Result                                        # files with prefix "98_10" means running with influenza_98 dataset at threshold 10
+    │   ├── 98_10.MST_31.png                          # MST graph with 31 nodes
+    │   ├── 98_10.MST_65.png                          # MST graph with 65 nodes
+    │   ├── 98_10.MST_starting.png                    # Starting MST graph (with 98 nodes)
+    │   ├── 98_10.global_tree_sequences.csv           # Sequence of each vertex in global tree
+    │   ├── 98_10.log                                 # log file with running time and newick format of global tree
+    │   ├── 98_10.stats.csv                           # Statistics per updating iteration
+    │   └── 98_10.tmp.tre                             # Temporary file (not important)
+    └── ...
