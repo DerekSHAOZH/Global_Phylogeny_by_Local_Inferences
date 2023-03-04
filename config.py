@@ -24,7 +24,7 @@ from google.colab import drive
 drive.mount('/content/drive')
 
 #II. Loading the sequence dataset
-fasta_file_path = "/content/drive/MyDrive/WS_22_23/input_files/influenza_98.fasta"  #TODO if change to another dataset
+fasta_file_path = "/Dataset/influenza_98.fasta"  #TODO if change to another dataset
 num_seq = 98    #TODO if change to another dataset
 
 #III. Defining the mutation cost matrix for maximum parsimony 
