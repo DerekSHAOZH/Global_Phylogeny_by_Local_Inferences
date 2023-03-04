@@ -24,7 +24,7 @@ from io import StringIO
 # drive.mount('/content/drive')
 
 #II. Loading the sequence dataset
-fasta_file_path = "/Dataset/influenza_98.fasta"  #TODO if change to another dataset
+fasta_file_path = os.getcwd() + "/Dataset/influenza_98.fasta"  #TODO if change to another dataset
 num_seq = 98    #TODO if change to another dataset
 
 #III. Defining the mutation cost matrix for maximum parsimony 
