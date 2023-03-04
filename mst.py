@@ -1,3 +1,5 @@
+# import config
+from config import *
 #I. Computing pairwise Jukes-Cantor distances between sequences
 def jukes_cantor_distance(sequence1, sequence2):
   # print('computing JC distance')
