@@ -2,7 +2,7 @@
 Final Project for FUB 22Win Phylogeny Inference and Application
 
 ## Prerequisites
-* Python >= 3.7 
+* Python (v>= 3.7)
 
   Some functions in this implementation depend on the insertion-order preservation nature of dict objects which has been declared to be an official part of the Python language spec since Python 3.7.0. 
   
@@ -44,7 +44,7 @@ Final Project for FUB 22Win Phylogeny Inference and Application
   ```sh
   conda install -c conda-forge biopython
   ```
-* Networkx v=3.0.0
+* Networkx (v=3.0.0)
   ```sh
   pip install networkx
   ```
