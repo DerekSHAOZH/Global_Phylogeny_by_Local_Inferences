@@ -41,7 +41,7 @@ random.seed(1234)
 
 #VI. Defining file name
 #for example, files with prefix "98_10" means running with influenza_98 dataset at threshold 10
-fn = '/Result/' + str(num_seq) + '_' + str(threshold)
+fn = os.getcwd() + '/Result/' + str(num_seq) + '_' + str(threshold)
 
 #VII. Printing messages to a log file
 #not used in .ipynb
