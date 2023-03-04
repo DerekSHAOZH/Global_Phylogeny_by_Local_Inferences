@@ -2,9 +2,11 @@
 Final Project for FUB 22Win Phylogeny Inference and Application
 
 ## Prerequisites
-* Python (v>= 3.7)
+* Python (v >= 3.8)
 
   Some functions in this implementation depend on the insertion-order preservation nature of dict objects which has been declared to be an official part of the Python language spec since Python 3.7.0. 
+  
+  NetworkX requires Python 3.8, 3.9, or 3.10
   
   You can check your Python version by 
   ```sh
