@@ -1,3 +1,8 @@
+# import config
+from config import *
+from infer_local import *
+from mst import *
+from tree import *
 #I. Finding the subtree induced by only Vs in the local tree
 #input: local unrooted phylogeny tree, Vs
 #output: dictionary with a tuple of two child nodes from Vs as key and the corresponding hidden vertex as value 
@@ -100,16 +105,19 @@ def infer_global_tree(T_global, MST, sequences, cost_matrix, threshold):
     
     else:
       #Selecting Vs from the MST such that it induces a subtree
+      print('Finding Vs ...')
       Vs = find_subtree(M, threshold)
       #if |Vm| - |Vs| > threshold,
       if(len(M.vertex_map) - len(Vs) > threshold):
         #Selecting Ve by performing BFS from the root of the induced subtree from Vs
+        print('Finding Ve ...')
         Ve = Ve = extra_vertices_with_bfs(M, Vs, 10)
         V = Vs + Ve
       else:
         V = [i for i in M.vertex_map.values()]
         is_last = True
-
+    
+    print('Inferring MP local tree ...')
     T_lowest = infer_MP_local_tree(V, sequences, k, cost_matrix)
 
     #if this is the last iteration, 
@@ -122,7 +130,8 @@ def infer_global_tree(T_global, MST, sequences, cost_matrix, threshold):
           if(neighbor.name not in vertices_visited):
             T_global.Add_edge(v_name, neighbor.name, 0.1)
             print(f'Updating global tree: Added edge from {v_name} to {neighbor.name}, distance = 0.1')
-
+        if T_global.Get_vertex(v_name).sequence != '':
+          T_global.Get_vertex(v_name).sequence = v.sequence
       
     else: 
       #Finding the subtree induced by only Vs in the local tree
@@ -132,12 +141,15 @@ def infer_global_tree(T_global, MST, sequences, cost_matrix, threshold):
       if (len(forest) > 0):
 
         #Updating the global phylogeny tree
+        print('Updating global tree ...')
         for children, parent_new in forest.items():
           T_global.Add_edge(children[0].name, parent_new.name, 0.1)
           T_global.Add_edge(children[1].name, parent_new.name, 0.1)
           print(f'Updating global tree: Added edge from {children[0].name} to {parent_new.name}, distance = 0.1')
           print(f'Updating global tree: Added edge from {children[1].name} to {parent_new.name}, distance = 0.1')
-        
+          T_global.Get_vertex(parent_new.name).sequence = parent_new.sequence
+
+
         #Deleting paired Vs vertices and Adding the new parent vertices to V
         V_new = update_subtree_vertices(forest, V)
 
@@ -149,25 +161,45 @@ def infer_global_tree(T_global, MST, sequences, cost_matrix, threshold):
         dist_mat_sub = create_distance_matrix(sequences_sub)
         
         #Updating the edges in the subgraph consisting of V_new in MST
+        print('Updating MST ...')
         MST = update_mst(MST, forest, V, sequences_sub, dist_mat_sub)
 
       print(f'Current MST has {len(MST.nodes)} nodes')
       if plot_1 and len(MST.nodes) <= (2/3)*num_sequences:
         fig, ax = plt.subplots(figsize=(30, 30))
         nx.draw(MST, with_labels=True, font_weight='bold', node_size = 500)
-        fig.savefig(f'MST_{len(MST.nodes)}.png')
+        plot1_fn = fn + f'.MST_{len(MST.nodes)}.png'
+        fig.savefig(plot1_fn)
         plot_1 = False
       if plot_2 and len(MST.nodes) <= (1/3)*num_sequences:
         fig, ax = plt.subplots(figsize=(30, 30))
         nx.draw(MST, with_labels=True, font_weight='bold', node_size = 500)
-        fig.savefig(f'MST_{len(MST.nodes)}.png')
+        plot2_fn = fn + f'.MST_{len(MST.nodes)}.png'
+        fig.savefig(plot2_fn)
         plot_2 = False
+
       print(f'Current global tree has {len(T_global.vertex_map)} vertices and {len(T_global.edge_list_map)} edges')
     
     
 
-    df.loc[k] = [k, len(MST.nodes), len(T_global.vertex_map), len(T_global.edge_list_map), len(V)]
+    df.loc[k] = [k, T_lowest.total_parsimony_score, len(MST.nodes), len(T_global.vertex_map), len(T_global.edge_list_map), len(V)]
 
     k += 1
   
   return T_global
+
+def newick_global_tree(tree):
+  last_iter = '_' + str(max(df['k']))
+  for edge_tuple in tree.edge_list_map.keys():
+    if last_iter in edge_tuple[0].name and last_iter in edge_tuple[1].name:
+      branch = edge_tuple
+      break
+
+  #Add 1 to out_degree of all hidden vertices
+  for v_name, v in tree.vertex_map.items():
+    if 'EPI' not in v_name:
+      v.out_degree = 1
+
+  tree.Root_tree_along_branch(branch[0].name, branch[1].name)
+  newick_str = tree.Compute_newick_format()
+  return newick_str
