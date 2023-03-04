@@ -2,7 +2,16 @@
 Final Project for FUB 22Win Phylogeny Inference and Application
 
 ## Prerequisites
-* ete3
+* Python >= 3.7 
+
+  Some functions in this implementation depend on the insertion-order preservation nature of dict objects which has been declared to be an official part of the Python language spec since Python 3.7.0. 
+  
+  You can check your Python version by 
+  ```sh
+  python3 --version
+  ```
+
+* Ete3
   ```sh
   pip install ete3
   ```
@@ -10,12 +19,29 @@ Final Project for FUB 22Win Phylogeny Inference and Application
   ```sh
   conda install -c conda-forge ete3
   ```
+* Biopython
+  ```sh
+  pip install biopython
+  ```
+  if you are a Conda user,
+  ```sh
+  conda install -c conda-forge biopython
+  ```
+* Networkx
+  ```sh
+  pip install networkx[default]
+  ```
+  if you are a Conda user,
+  ```sh
+  conda install -c anaconda networkx
+  ```
+  
 ## Installation
 ```sh
 git clone https://github.com/DerekSHAOZH/Global_Phylogeny_by_Local_Inferences/
 ```
 
-## Usage
+## Execution
 ```sh
 python3 main.py
 ```
