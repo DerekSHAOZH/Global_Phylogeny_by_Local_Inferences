@@ -70,6 +70,7 @@ git clone https://github.com/DerekSHAOZH/Global_Phylogeny_by_Local_Inferences/
   ```  
 
 * Run scripts
+  
   Your should run the Python script within this working directory.
   ```sh
   python3 main.py
