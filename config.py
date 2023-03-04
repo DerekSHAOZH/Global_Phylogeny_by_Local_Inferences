@@ -34,7 +34,7 @@ W = np.array([[0, 1, 1, 1],
               [1, 1, 1, 0]])
 
 #VII. Setting the threshold for inferring local tree
-threshold = 10
+threshold = 10  #TODO
 
 #IV. Setting the random seed for reproducibility
 random.seed(1234)
