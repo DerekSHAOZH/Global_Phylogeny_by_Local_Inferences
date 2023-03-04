@@ -166,10 +166,10 @@ def infer_MP_local_tree(V, sequences, iteration_counter, cost_matrix):
   
   T.Add_mut_cost_matrix(cost_matrix)
   T.Store_pos_list_for_unique_site_patterns()
-  print(f"Total number of unique site patterns is {len(T.first_pos_of_unique_site_pattern_to_pos_list)}")
+#   print(f"Total number of unique site patterns is {len(T.first_pos_of_unique_site_pattern_to_pos_list)}")
   T.Get_total_number_of_informative_site_patterns()
   T.Run_Sankoff_for_all_sites()
-  print(f"Total parsimony score is {T.total_parsimony_score}")
+#   print(f"Total parsimony score is {T.total_parsimony_score}")
   T.Suppress_the_root()
   # T.total_parsimony_score = lowest_parsimony_score
 
