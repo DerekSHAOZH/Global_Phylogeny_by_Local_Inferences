@@ -19,9 +19,10 @@ def calculate_rf_distance(newick_our_method, newick_benchmark):
 
     # RF(T1, T2) = |S1⋃S2| − |S1⋂S2|
     print(len(edges_our_method))
-    RF_dist = edges_union - edges_intersection
-    print(f'Robinson-Foulds distance = |S1⋃S2| − |S1⋂S2| = {len(edges_union)} - {len(edges_intersection)} = {len(edges_union) - len(edges_intersection)} over a total of {rf_max}')
-    return RF_dist
+    normalized_RF_dist = (len(edges_union) - len(edges_intersection))/len(edges_union)
+    print(f'Robinson-Foulds (RF) distance = |S1⋃S2| − |S1⋂S2| = {len(edges_union)} - {len(edges_intersection)} = {len(edges_union) - len(edges_intersection)} over a total of {rf_max}')
+    print(f'Normalized Robinson-Foulds distance = RF / |S1⋃S2| = {normalized_RF_dist}')
+    return normalized_RF_dist
 
 if __name__ == "__main__":
     newick_our_method, newick_raxml_benchmark = parse_newick_string(sys.argv[1], sys.argv[2])
