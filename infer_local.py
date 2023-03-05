@@ -135,9 +135,10 @@ def convert_seq_to_aln(V, sequences, mapping):
 
 #VI. Converting MP tree object to newick format
 def newick_MP_local_tree(tree, mapping):
-  Phylo.write(tree, "tmp.tre", 'newick')
+  tmp_fn = fn + ".tmp.tre"
+  Phylo.write(tree, tmp_fn, 'newick')
 
-  with open("tmp.tre", 'r') as f:
+  with open(tmp_fn, 'r') as f:
     output = f.read()
   tmp = output[0:-1]
   t = ete3.Tree(tmp, format = 1)
