@@ -138,7 +138,7 @@ def infer_global_tree(T_global, MST, sequences, cost_matrix, threshold):
     else: 
       #Finding the subtree induced by only Vs in the local tree
       forest = informative_subtree(T_lowest, Vs)
-      print(f'Forest: {len(forest)}')
+#       print(f'Forest: {len(forest)}')
 
       #if forest is not empty, 
       if (len(forest) > 0):
