@@ -6,13 +6,20 @@ from tree import *
 def find_subtree(T, threshold): # e.g. threshold = 10
   # initialize vertices_to_visit to all of the leaves
   vertices_to_visit = T.leaves
+  k = 1
   while len(vertices_to_visit) > 0:
-    v = vertices_to_visit.pop(0)
+    #randomize the starting vertex
+    if k == 1:
+      v = vertices_to_visit.pop(random.randrange(len(vertices_to_visit)))
+      # print(v.name)
+    else:
+      v = vertices_to_visit.pop(0)
   
     if v.is_leaf:
         v.subtree.append(v)
         if v.neighbors[0] not in vertices_to_visit:
-          vertices_to_visit.extend(v.neighbors)
+          #randomly shuffle the neighbors
+          vertices_to_visit.extend(random.sample(v.neighbors, len(v.neighbors)))
     else:
     #if v is an internal vertex, 
       #check the number of neighbors with empty subtrees
@@ -23,7 +30,8 @@ def find_subtree(T, threshold): # e.g. threshold = 10
       if num_neighbor_with_empty_subtree == 1:
         # print(v.name)
         v.subtree.append(v)
-        for n in v.neighbors:
+        #randomly shuffle the neighbors
+        for n in random.sample(v.neighbors, len(v.neighbors)):
           if len(n.subtree) > 0:
             for subtree_vertex in n.subtree:
               if subtree_vertex not in v.subtree:
@@ -34,13 +42,16 @@ def find_subtree(T, threshold): # e.g. threshold = 10
       #if the number of neighbors with empty(unassigned) subtrees > 1, 
       #then queue this vertex for re-visiting after updating its neighbors
       else:
-        for n in v.neighbors:
+        #randomly shuffle the neighbors
+        for n in random.sample(v.neighbors, len(v.neighbors)):
           if len(n.subtree) == 0 and n not in vertices_to_visit:
             vertices_to_visit.append(n)
         vertices_to_visit.append(v)
  
     if len(v.subtree) >= threshold: 
       return v.subtree
+
+    k += 1
 
 #II. Selecting Ve by performing BFS from the root of the induced subtree from Vs 
 #input: MST tree, Vs, threshold for Ve which is consistent with Vs
@@ -56,7 +67,7 @@ def extra_vertices_with_bfs(MST, Vs, threshold): #function for BFS
   while queue:          # Creating loop to visit each node
     m = queue.pop(0) 
     
-    for neighbor in MST.Get_vertex(m.name).neighbors:
+    for neighbor in random.sample(MST.Get_vertex(m.name).neighbors, len(MST.Get_vertex(m.name).neighbors)):
       if neighbor not in visited:
         visited.append(neighbor)
         queue.append(neighbor)
@@ -124,10 +135,9 @@ def convert_seq_to_aln(V, sequences, mapping):
 
 #VI. Converting MP tree object to newick format
 def newick_MP_local_tree(tree, mapping):
-  tmp_fn = fn + ".tmp.tre"
-  Phylo.write(tree, tmp_fn, 'newick')
+  Phylo.write(tree, "tmp.tre", 'newick')
 
-  with open(tmp_fn, 'r') as f:
+  with open("tmp.tre", 'r') as f:
     output = f.read()
   tmp = output[0:-1]
   t = ete3.Tree(tmp, format = 1)
@@ -147,16 +157,37 @@ def infer_MP_local_tree(V, sequences, iteration_counter, cost_matrix):
     mapping[V[i].name] = index
   # print(mapping)
   aln = convert_seq_to_aln(V, sequences, mapping)
+
+  # final_MP_newick = ''
+  # final_lowest_parsimony_score = float('inf')
+
+  # #starting with 3 random initial tree topologies to avoid local optimum
+  # k = 1
+  # while k < 4:
+  #random starting tree
+  t = ete3.Tree()
+  t.populate(len(mapping), [v for v in mapping.values()])
+  newick_str = t.write(format = 3)
+  # print(newick_str)
+  starting_tree = Phylo.read(StringIO(newick_str), "newick")
+  # print(starting_tree)
   scorer = ParsimonyScorer()
   searcher = NNITreeSearcher(scorer)
-  constructor = ParsimonyTreeConstructor(searcher)
+  constructor = ParsimonyTreeConstructor(searcher, starting_tree)
   MP_tree = constructor.build_tree(aln)
+
+  # cur_lowest_parsimony_score = scorer.get_score(MP_tree, aln)
   lowest_parsimony_score = scorer.get_score(MP_tree, aln)
-  print(f'Best parsimony score: {lowest_parsimony_score}')
   MP_newick = newick_MP_local_tree(MP_tree, mapping)
   # print(MP_newick)
+    # if cur_lowest_parsimony_score < final_lowest_parsimony_score:
+    #   final_lowest_parsimony_score = cur_lowest_parsimony_score
+    #   final_MP_newick = MP_newick
 
+  # print(f'Best parsimony score: {final_lowest_parsimony_score}')
+  print(f'Best parsimony score: {lowest_parsimony_score}')
   T = Tree('local')
+  # T.Read_newick_string_without_branch_lengths(final_MP_newick, iteration_counter)
   T.Read_newick_string_without_branch_lengths(MP_newick, iteration_counter)
   for v in V:
     # print(v.name)
@@ -166,10 +197,10 @@ def infer_MP_local_tree(V, sequences, iteration_counter, cost_matrix):
   
   T.Add_mut_cost_matrix(cost_matrix)
   T.Store_pos_list_for_unique_site_patterns()
-#   print(f"Total number of unique site patterns is {len(T.first_pos_of_unique_site_pattern_to_pos_list)}")
+  # print(f"Total number of unique site patterns is {len(T.first_pos_of_unique_site_pattern_to_pos_list)}")
   T.Get_total_number_of_informative_site_patterns()
   T.Run_Sankoff_for_all_sites()
-#   print(f"Total parsimony score is {T.total_parsimony_score}")
+  # print(f"Total parsimony score is {T.total_parsimony_score}")
   T.Suppress_the_root()
   # T.total_parsimony_score = lowest_parsimony_score
 
