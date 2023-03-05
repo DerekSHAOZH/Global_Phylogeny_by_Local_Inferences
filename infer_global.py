@@ -107,11 +107,13 @@ def infer_global_tree(T_global, MST, sequences, cost_matrix, threshold):
       #Selecting Vs from the MST such that it induces a subtree
       print('Finding Vs ...')
       Vs = find_subtree(M, threshold)
+
       #if |Vm| - |Vs| > threshold,
       if(len(M.vertex_map) - len(Vs) > threshold):
         #Selecting Ve by performing BFS from the root of the induced subtree from Vs
         print('Finding Ve ...')
-        Ve = Ve = extra_vertices_with_bfs(M, Vs, 10)
+        Ve = extra_vertices_with_bfs(M, Vs, threshold)
+          
         V = Vs + Ve
       else:
         V = [i for i in M.vertex_map.values()]
@@ -136,6 +138,7 @@ def infer_global_tree(T_global, MST, sequences, cost_matrix, threshold):
     else: 
       #Finding the subtree induced by only Vs in the local tree
       forest = informative_subtree(T_lowest, Vs)
+      print(f'Forest: {len(forest)}')
 
       #if forest is not empty, 
       if (len(forest) > 0):
