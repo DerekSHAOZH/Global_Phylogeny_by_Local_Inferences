@@ -292,8 +292,8 @@ class Tree:
         pattern_weight = len(self.first_pos_of_unique_site_pattern_to_pos_list[site])        
         total_number_of_informative_sites += pattern_weight
         total_number_of_informative_site_patterns += 1
-    print(f"total number of informative sites is {total_number_of_informative_sites}")
-    print(f"total number of unique informative_site_patterns is {total_number_of_informative_site_patterns}")
+    # print(f"total number of informative sites is {total_number_of_informative_sites}")
+    # print(f"total number of unique informative_site_patterns is {total_number_of_informative_site_patterns}")
   def Run_Sankoff(self,site):     
     # for site in range(self.self.sequence_length):
     # Phase 1 compute minimum mutation cost for subtrees
