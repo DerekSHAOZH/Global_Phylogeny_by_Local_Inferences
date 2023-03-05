@@ -2,7 +2,7 @@
 Final Project for FUB 22Win Phylogeny Inference and Application
 
 ## Notebook
-*GPLI.ipynb* is the interactive jupyter notebook (supported by Google Colab) which has the same function as the python scripts.
+*GPLI.ipynb* is the interactive jupyter notebook (supported by Google Colab) which has the same function as the python scripts. It displays the output when running with influenza_98.fasta at threshold = 10. 
 
 ## Prerequisites
 * Python (version >= 3.8)
