@@ -97,7 +97,7 @@ For example,
 
 ## Analysis
 
-### RF distance
+### Robinson-Foulds (RF) distance
 This PR allows us to calculate the RF distance for a given result from our method vs. the raxml benchmark. It uses the ete3 package. The calculation was covered in [Lecture 5, slide 13](https://drive.google.com/file/d/1s69LXhSWWK6l2IdiW4lEv4E-jQ52LeBk/view)
 
 To Run: 
