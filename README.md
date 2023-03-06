@@ -94,3 +94,17 @@ For example,
     │   ├── 98_10.stats.csv                           # Statistics per updating iteration
     │   └── 98_10.tmp.tre                             # Temporary file (not important)
     └── ...
+
+## Analysis
+
+### RF distance
+This PR allows us to calculate the RF distance for a given result from our method vs. the raxml benchmark. It uses the ete3 package. The calculation was covered in [Lecture 5, slide 13](https://drive.google.com/file/d/1s69LXhSWWK6l2IdiW4lEv4E-jQ52LeBk/view)
+
+To Run: 
+```python
+python3 rf_distance.py path/to/our_method_results_file path/to/benchmark_results_file
+```
+e.g. 
+```python
+python3 rf_distance.py ../../final-project/results/1019_15.log ../../final-project/results/influenza_1019.raxml.bestTree.tre
+```
