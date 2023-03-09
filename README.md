@@ -108,3 +108,5 @@ e.g.
 ```python
 python3 rf_distance.py ../../final-project/results/1019_15.log ../../final-project/results/influenza_1019.raxml.bestTree.tre
 ```
+### Robinson-Foulds (RF) distance visualizations & other metrics (Shared Phylogenetic Information)
+To generate visualization for the RF distances and other metrics, see the companion [R script](https://gist.github.com/meghaphone/9aaed626c027da7dd6c43509078d7d4a).
